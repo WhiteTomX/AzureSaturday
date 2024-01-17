@@ -40,11 +40,10 @@ style: |
 
 ---
 
-## Naive Thimo
+## Start with Entra ID
 
+Naive Thimo
  <i class="fa-solid fa-user-gear fa-10x"></i><i class="fa-solid fa-lightbulb fa-10x"></i>
-
-
 
 ---
 
