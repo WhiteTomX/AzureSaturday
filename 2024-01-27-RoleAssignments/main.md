@@ -27,7 +27,7 @@ style: |
 
 # What to expect?
 
-- Invisible Eligible Role Assignments in Portal
+- Invisible not yet active Eligible Role Assignments in Portal
 - Role Assignments that's shouldn't be possible via API
 
 ---
@@ -149,8 +149,41 @@ Anyone knows this API?
 
 ### Graph APIs
 
-- Everyone seems to use `roleManagement/directory/roleAssignments`
-  - *Active* role assignments
-- At least some refer to `/roleManagement/directory/roleEligibilityScheduleInstances`
-  - *Eligible* role assignments in PIM
-- 
+- Everyone seems to use `roleManagement/directory/roleAssignments` as *Active* role assignments
+- At least some refer to `/roleManagement/directory/roleEligibilityScheduleInstances` as *Eligible* role assignments in PIM
+
+---
+
+#### Documentation
+
+* `Assignment *`
+  * Ignored, we got the other API for that
+* `Eligibility schedule requests`
+  * Represents a request for a role eligibility 
+*  `Eligibility Schedule` vs. `Eligibility Schedule Instance`
+
+![bg right fit](./images/Entra-PIM-Graph-Documentation.png)
+
+---
+
+#### Eligibility Schedule Instance
+
+> Represents the instance for a role eligibility in your tenant.
+
+* Used by most people in the Internet & Azure Portal
+* Outputs all Eligibilities visible in Portal
+* But what's *Eligibility Schedule*?
+
+---
+
+#### Eligibility Schedule Instance
+
+> Represents a schedule for a role eligibility in your tenant and is used to instantiate a EligibilityScheduleInstance.
+
+```mermaid
+flowchart LR
+    EligibilityScheduleRequest -- "Approved" --> EligibilitySchedule
+    EligibilitySchedule -- SomeHow --> EligibilityScheduleInstance
+```
+
+* <i class="fa-regular fa-circle-question"></i> Purpose of Member Type
