@@ -27,7 +27,7 @@ style: |
 
 # What to expect?
 
-- Invisible Eligible Role Assignments in Portal
+- Invisible not yet active Eligible Role Assignments in Portal
 - Role Assignments that's shouldn't be possible via API
 
 ---
@@ -64,9 +64,9 @@ Naive Thimo
 
 ### EntraID Export results
 
-| displayName               | roleDisplayName      | directoryScopeId | And More... |
-|---------------------------------|----------------------|------------------|-------------|
-| WhiteTom | Global Administrator | /                |             |
+| displayName | roleDisplayName      | directoryScopeId | And More... |
+| ----------- | -------------------- | ---------------- | ----------- |
+| WhiteTom    | Global Administrator | /                |             |
 
 - <i class="fa-solid fa-check"></i> Looks good!
 
@@ -102,11 +102,11 @@ What is included in the export?
 
 ---
 
-| State | User Group Name | Role Name                 | Start Time           | End Time             | Member Type | Email                           | PrincipalName                   |
-|------------------|-----------------|---------------------------|----------------------|----------------------|-------------|---------------------------------|---------------------------------|
-| Eligible         | Adele Vance     | Application Administrator | 2024-01-21 13:05:43Z | Permanent            | Direct      | AdeleV@4wtywh.onmicrosoft.com   | AdeleV@4wtywh.onmicrosoft.com   |
-| Active           | Adele Vance   | Application Administrator     | 2024-01-21 14:11:13Z | 2024-01-21 22:11:13Z | Direct      | AdeleV@4wtywh.onmicrosoft.com   | AdeleV@4wtywh.onmicrosoft.com   |
-| Active           | WhiteTom        | Global Administrator      |                      | Permanent            | Direct      | WhiteTom@4wtywh.onmicrosoft.com | WhiteTom@4wtywh.onmicrosoft.com |
+| State    | User Group Name | Role Name                 | Start Time           | End Time             | Member Type | Email                           | PrincipalName                   |
+| -------- | --------------- | ------------------------- | -------------------- | -------------------- | ----------- | ------------------------------- | ------------------------------- |
+| Eligible | Adele Vance     | Application Administrator | 2024-01-21 13:05:43Z | Permanent            | Direct      | AdeleV@4wtywh.onmicrosoft.com   | AdeleV@4wtywh.onmicrosoft.com   |
+| Active   | Adele Vance     | Application Administrator | 2024-01-21 14:11:13Z | 2024-01-21 22:11:13Z | Direct      | AdeleV@4wtywh.onmicrosoft.com   | AdeleV@4wtywh.onmicrosoft.com   |
+| Active   | WhiteTom        | Global Administrator      |                      | Permanent            | Direct      | WhiteTom@4wtywh.onmicrosoft.com | WhiteTom@4wtywh.onmicrosoft.com |
 
 ---
 
@@ -149,8 +149,62 @@ Anyone knows this API?
 
 ### Graph APIs
 
-- Everyone seems to use `roleManagement/directory/roleAssignments`
-  - *Active* role assignments
-- At least some refer to `/roleManagement/directory/roleEligibilityScheduleInstances`
-  - *Eligible* role assignments in PIM
-- 
+- Everyone seems to use `roleManagement/directory/roleAssignments` as *Active* role assignments
+- At least some refer to `/roleManagement/directory/roleEligibilityScheduleInstances` as *Eligible* role assignments in PIM
+
+---
+
+#### Documentation
+
+* `Assignment *`
+  * Ignored, we got the other API for that
+* [`Eligibility schedule requests`](https://learn.microsoft.com/en-us/graph/api/resources/unifiedroleeligibilityschedulerequest?view=graph-rest-1.0)
+  * Represents a request for a role eligibility 
+*  [`Eligibility Schedule`](https://learn.microsoft.com/en-us/graph/api/resources/unifiedroleeligibilityschedule?view=graph-rest-1.0) vs. [`Eligibility Schedule Instance`](https://learn.microsoft.com/en-us/graph/api/resources/unifiedroleeligibilityscheduleinstance?view=graph-rest-1.0)
+
+![bg right fit](./images/Entra-PIM-Graph-Documentation.png)
+
+---
+
+#### Eligibility Schedule Instance
+
+> Represents the instance for a role eligibility in your tenant.
+
+* Used by most people in the Internet & Azure Portal
+* Outputs all Eligibility visible in Portal
+* <i class="fa-regular fa-circle-question"></i> What is *Eligibility Schedule*?
+
+---
+
+#### Eligibility Schedule
+
+> Represents a schedule for a role eligibility in your tenant and is used to instantiate a EligibilityScheduleInstance.
+
+* <i class="fa-regular fa-circle-question"></i> What is the difference?
+* `EligibilityScheduleInstance` has Properties `startDateTime`, `endDateTime`, `roleEligibilityScheduleId`
+* `EligibilitySchedule` has Property `scheduleInfo` of type `requestSchedule`
+
+---
+
+```mermaid
+flowchart LR
+    EligibilityScheduleRequest -- "Approved" --> EligibilitySchedule
+    EligibilitySchedule -- at start Time --> EligibilityScheduleInstance
+```
+
+---
+
+#### Hidden Assignments
+
+![left](./images/Entra-PIM-API-Assignment.png)
+![bg right fit](./images/Entra-PIM-Portal-Assignment.png)
+
+<!-- But wait, we can assign stuff in the future if not permanent -->
+<!-- Even permanent assignment in the future is possible via Graph -->
+
+---
+
+#### What do we see in Portal/Exports?
+
+* <i class="fa-regular fa-face-sad-tear"></i> No Eligible Assignments in the future <i class="fa-regular fa-face-sad-tear"></i>
+* &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Only current Eligible Assignments
