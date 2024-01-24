@@ -219,6 +219,6 @@ flowchart LR
 ### Summary
 
 - Not all Export Buttons do the same
-- Not yet instantiated Eligible assignments neither shown, nor exported
+- Not yet instantiated Eligible assignments ~~neither shown~~, nor exported
   - at least a hint in PIM is there now
 
