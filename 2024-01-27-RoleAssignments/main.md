@@ -208,3 +208,17 @@ flowchart LR
 
 * <i class="fa-regular fa-face-sad-tear"></i> No Eligible Assignments in the future <i class="fa-regular fa-face-sad-tear"></i>
 * &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Only current Eligible Assignments
+
+---
+
+<!-- New Hint in PIM! Many changes in Portal right now -->
+![bg fit](./images/Entra-PIM-Eligible-Hint.png)
+
+---
+
+### Summary
+
+- Not all Export Buttons do the same
+- Not yet instantiated Eligible assignments neither shown, nor exported
+  - at least a hint in PIM is there now
+
