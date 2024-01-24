@@ -83,16 +83,6 @@ Naive Thimo
 
 ---
 
-### Export again
-
-Who hopes, that it is included?
-
-* <i class="fa-solid fa-xmark"></i> PIM eligible not included
-* Are via PIM currently activated Roles included?
-  * <i class="fa-solid fa-exclamation"></i> Yes, but without any hint, that it will expire
-
----
-
 <!-- But we saw another Button, does it work? -->
 
 ### Export via PIM
@@ -110,51 +100,26 @@ What is included in the export?
 
 ---
 
-### Summary - fun with Portal
+<i class="fa-solid fa-computer-mouse fa-10x"></i>
 
-* EntraID Export
-  * <i class="fa-solid fa-xmark"></i> Doesn't include PIM Eligible roles
-  * &nbsp;<i class="fa-solid fa-exclamation"></i>&nbsp; Contains activated roles (without end date)
-* PIM Export
-  * <i class="fa-solid fa-check"></i> Includes Active & Eligible Assignments
-  * &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Doesn't include transitive group assignments
-  * <i class="fa-regular fa-circle-question"></i> Purpose of Member Type
-* Who likes GUI?
+- Who likes to use the Mouse?
   * <i class="fa-regular fa-face-angry"></i> I don't!
 
 ---
 
-### Application Programming Interface (API)
+## Graph APIs
 
-![](./images/Entra-PIM-API-Export.png)
+<!-- I'm Lazy-->
+<!-- So searched the WWW for other people already done that-->
 
----
+> Microsoft Graph is a RESTful web API that enables you to access Microsoft Cloud service resources.
 
-```
-https://api.azrbac.mspim.azure.com/api/v2/privilegedAccess/aadroles/
-  roleAssignments/export?
-    $expand=subject,roleDefinition($expand=resource)&
-    $filter=roleDefinition/resource/id eq 'd995bd76-2883-4b4e-8ff4-0c505ec95484'
-```
-
-<!-- ResourceID is just the TenantID -->
-
-Anyone knows this API?
-
-* internal API for PIM
-* Let's not use that! Alternatives?
-* Use `Graph API` instead
+* Everyone seems to use `roleManagement/directory/roleAssignments` as *Active* role assignments
+* Some refer to `/roleManagement/directory/roleEligibilityScheduleInstances` as *Eligible* role assignments in PIM
 
 ---
 
-### Graph APIs
-
-- Everyone seems to use `roleManagement/directory/roleAssignments` as *Active* role assignments
-- At least some refer to `/roleManagement/directory/roleEligibilityScheduleInstances` as *Eligible* role assignments in PIM
-
----
-
-#### Documentation
+### Documentation
 
 * `Assignment *`
   * Ignored, we got the other API for that
@@ -186,16 +151,6 @@ Anyone knows this API?
 
 ---
 
-```mermaid
-flowchart LR
-    EligibilityScheduleRequest -- "Approved" --> EligibilitySchedule
-    EligibilitySchedule -- at start Time --> EligibilityScheduleInstance
-```
-
----
-
-#### Hidden Assignments
-
 ![left](./images/Entra-PIM-API-Assignment.png)
 ![bg right fit](./images/Entra-PIM-Portal-Assignment.png)
 
@@ -204,10 +159,20 @@ flowchart LR
 
 ---
 
-#### What do we see in Portal/Exports?
+```mermaid
+flowchart LR
+    EligibilityScheduleRequest -- "Approved" --> EligibilitySchedule
+    EligibilitySchedule -- at start Time --> EligibilityScheduleInstance
+```
 
+---
+
+### What do we see in Portal/Exports?
+
+* &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Current Eligible Assignments
 * <i class="fa-regular fa-face-sad-tear"></i> No Eligible Assignments in the future <i class="fa-regular fa-face-sad-tear"></i>
-* &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Only current Eligible Assignments
+  * BUT: Microsoft is improving and adding a hint
+
 
 ---
 
@@ -222,3 +187,43 @@ flowchart LR
 - Not yet instantiated Eligible assignments ~~neither shown~~, nor exported
   - at least a hint in PIM is there now
 
+
+
+---
+
+## Additional Information
+
+---
+
+### Comparison EntraID Export vs PIM Export
+
+* EntraID Export
+  * <i class="fa-solid fa-xmark"></i> Doesn't include PIM Eligible roles
+  * &nbsp;<i class="fa-solid fa-exclamation"></i>&nbsp; Contains activated roles (without end date)
+* PIM Export
+  * <i class="fa-solid fa-check"></i> Includes Active & Eligible Assignments
+  * &nbsp; <i class="fa-solid fa-exclamation"></i>&nbsp; Doesn't include transitive group assignments
+  * <i class="fa-regular fa-circle-question"></i> Purpose of Member Type
+
+---
+
+### API used by Portal Export
+
+![](./images/Entra-PIM-API-Export.png)
+
+---
+
+```
+https://api.azrbac.mspim.azure.com/api/v2/privilegedAccess/aadroles/
+  roleAssignments/export?
+    $expand=subject,roleDefinition($expand=resource)&
+    $filter=roleDefinition/resource/id eq 'd995bd76-2883-4b4e-8ff4-0c505ec95484'
+```
+
+<!-- ResourceID is just the TenantID -->
+
+Anyone knows this API?
+
+* internal API for PIM
+* Let's not use that! Alternatives?
+* Use `Graph API` instead
