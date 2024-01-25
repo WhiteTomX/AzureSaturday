@@ -28,7 +28,7 @@ style: |
 # What to expect?
 
 - Invisible not yet active Eligible Role Assignments in Portal
-- Role Assignments that's shouldn't be possible via API
+- Role Assignments that's shouldn't be possible
 
 ---
 
@@ -181,13 +181,27 @@ flowchart LR
 
 ---
 
+## PIM Settings
+
+- What happens, when you create a permanent active assignment?
+![bg right fit](./images-PIM-Active-Assignment-Bug/Settings-PIM.png)
+
+---
+
+![bg fit](./images-PIM-Active-Assignment-Bug/Assignment-PIM.png)
+
+---
+
+![bg fit](./images-PIM-Active-Assignment-Bug/Assignment-Graph.png)
+
+---
+
 ### Summary
 
 - Not all Export Buttons do the same
 - Not yet instantiated Eligible assignments ~~neither shown~~, nor exported
   - at least a hint in PIM is there now
-
-
+- Permanent Active Assignments seem possible although not allowed
 
 ---
 
