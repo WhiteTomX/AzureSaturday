@@ -62,6 +62,15 @@ Naive Thimo
 
 ---
 
+### Privileged Identity Management
+
+- manage, control, and monitor access to important resources
+- Allows Eligible assignments, that users can activate when needed
+
+![](./images/Entra-PIM-Portal.png)
+
+---
+
 ### EntraID Export results
 
 | displayName | roleDisplayName      | directoryScopeId | And More... |
@@ -71,15 +80,6 @@ Naive Thimo
 - <i class="fa-solid fa-check"></i> Looks good!
 
 * <i class="fa-solid fa-pause"></i> Wait! What about PIM?
-
----
-
-### Privileged Identity Management
-
-- manage, control, and monitor access to important resources
-- Allows Eligible assignments, that users can activate when needed
-
-![](./images/Entra-PIM-Portal.png)
 
 ---
 
